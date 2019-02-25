@@ -83,6 +83,7 @@ int findValue(LINKEDLIST* list, int value);
 int findValueByIndex(LINKEDLIST* list, int index);
 void updateValueByIndex(LINKEDLIST* list, int index, ELEMENT newValue);
 void removeFromList(LINKEDLIST* list, int index);
+void orderLookup(LINKEDLIST* list);
 //-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 
 //Main
@@ -90,7 +91,7 @@ int main(void){
 	list = (LINKEDLIST*)malloc(sizeof(LINKEDLIST));
 	printf("       ---LinkedList implementation in C---\n");
 	printf("Tip: The '>>' appears when you can type a command.\n");
-	printf("Tip: The '>' appears when you need to type inputs.\n\n");
+	printf("Tip: The '>' appears when you need to type inputs to the functions.\n\n");
 	printf("Press 'h' for help.\n");
 	menu();
 }
@@ -129,13 +130,13 @@ void menu(){
 			menu();
 		case 'f':
 			system("CLS");
-			printf("Please, enter a number: \n>");
-			scanf("%d", &search);
-			int auxSearch = findValue(list, search);
 			if(functionCall==-1){
 				printf("Error: list empty or uninitialized.\n");
 				menu();
 			}else{
+				printf("Please, enter a number: \n>");
+				scanf("%d", &search);
+				int auxSearch = findValue(list, search);
 				if(auxSearch!=-1){
 					printf("Value found, list index: %d\n", auxSearch);
 				}else{
@@ -145,9 +146,9 @@ void menu(){
 			menu();
 		case 'i':
 			system("CLS");
-			printf("Please, enter a number: \n>");
-			scanf("%d", &search);
 			if(functionCall!=-1){
+				printf("Please, enter a number: \n>");
+				scanf("%d", &search);
 				if(findValueByIndex(list, search)==-1){
 					printf("Error: value not found or index invalid.\n");
 				}else{
@@ -158,8 +159,8 @@ void menu(){
 			}
 			menu();
 		case 'u': 
+			system("CLS");
 			if(functionCall!=-1){
-				system("CLS");
 				printf("Please, select the position of list to be updated: ");
 				printf("(From %d to %d):\n>", 0, list->length-1);
 				scanf("%d", &search);
@@ -173,14 +174,29 @@ void menu(){
 				menu();
 			}
 		case 'd':
-			printf("Please, enter the index of list to be removed: (from %d to %d)\n>", 0, list->length-1);
-			scanf("%d", &search);
-			removeFromList(list, search);
-			menu();
+			system("CLS");
+			if(functionCall==-1){
+				printf("Error: list empty or unitialized.\n");
+				menu();
+			}else{
+				printf("Please, enter the index of list to be removed: (from %d to %d)\n>", 0, list->length-1);
+				scanf("%d", &search);
+				removeFromList(list, search);
+				menu();
+			}
+		case 'l':
+			system("CLS");
+			if(functionCall==-1){
+				printf("Error: list empty or uninitialized.\n");
+				menu();
+			}else{
+				orderLookup(list);
+			}
 		case 'x':
 			printf("\nProgram Closed");
 			exit(0);
 		default:
+			system("CLS");
 			printf("Invalid command, press 'h' for help.\n");
 			menu();
 	}	
@@ -201,6 +217,7 @@ void listCommands(){
 	printf("'i' -> Locates a value from the list by a given index.\n");
 	printf("'u' -> Update a value of the list.\n");
 	printf("'d' -> Removes a value from the list.\n");
+	printf("'l' -> Shows the previous and next elements of a element in the list.\n");
 	
 	printf("\n");
 	printf("'x' -> Close the program.\n");
@@ -241,12 +258,13 @@ void setValue(LINKEDLIST* list, NODE value){
 		list->elements[list->length-1].nextElement = list->elements[list->length].current;
 		list->length++;
 		printf("Element added.\n");
-	}else if(!((list->length==0) && (list->length>0) && (list->length==0))){
-		functionCall = -1;
-		printf("Error: list needs to be initialized.\n");
+	}else if(!(list->length<0 && list->length==0 && list->length>0)){
+		printf("Error: list empty or uninitialized.\n");
+		functionCall = -1;	
 	}else{
-		printf("List full.\n");
+		printf("List full.\n");	
 	}
+		
 }
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
@@ -366,19 +384,18 @@ void updateValueByIndex(LINKEDLIST* list, int index, ELEMENT newValue){
 		}
 	}
 	
-	//--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
+//--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 	
 void removeFromList(LINKEDLIST* list, int index){
-		int i, position;
+		int i;
 		char confirmation;
-		
-		position = findValueByIndex(list, index);
+		NODE aux;
 		
 		if(functionCall==-1){
 			printf("Error: list empty or uninitialized.\n");
 			menu();
 		}else{
-				if(position==-1){
+				if(index<0 || index>list->length-1){
 				printf("Error: list index invalid. Try again.\n");
 				menu();
 			}else{
@@ -386,10 +403,11 @@ void removeFromList(LINKEDLIST* list, int index){
 				scanf("%s", &confirmation);
 				switch(confirmation){
 					case 'y':
-						for(i=0;i<position;i++){
+						for(i = index;i<list->length-1;i++){
 							list->elements[i] = list->elements[i+1];
 						}
 						list->length--;
+						list->elements[index-1].nextElement = list->elements[index].current;
 						printf("Item removed.\n");
 						menu();
 					case 'n':
@@ -402,3 +420,34 @@ void removeFromList(LINKEDLIST* list, int index){
 			}
 		}
 	}
+	
+//--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
+
+void orderLookup(LINKEDLIST* list){
+	system("CLS");
+	
+	printf("Please, enter a list index (from %d to %d): \n>", 0, list->length-1);
+	scanf("%d", &search);
+	
+	if(search>=0 && search<list->length){
+		if(search==0){
+			printf("\nOrder of elements:\n\n");
+			printf("Previous|Actual|Next\n");
+			printf("X       |%d    |%d\n", list->elements[search].current, list->elements[search].nextElement);
+			menu();
+		}else if(search == list->length-1){
+			printf("\nOrder of elements:\n\n");
+			printf("Previous|Actual|Next\n");
+			printf("%d       |%d    |X\n", list->elements[search-1].current, list->elements[search].current);
+			menu();
+		}else{
+			printf("\nOrder of elements:\n\n");
+			printf("Previous|Actual|Next\n");
+			printf("%d       |%d    |%d\n", list->elements[search-1].current, list->elements[search].current, list->elements[search].nextElement);
+			menu();
+		}
+	}else{
+		printf("Error: Index invalid.\n");
+		menu();
+	}
+}
