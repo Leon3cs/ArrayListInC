@@ -1,4 +1,4 @@
-# Linked List In C
+# ArrayList In C
 A simulation of the properties of an ArrayList written in C 
 
 A bunch of features were added to allow the user to interact with the list such as:
