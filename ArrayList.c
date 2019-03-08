@@ -1,11 +1,11 @@
-/* * * * * * * * * * * * Linked List in C * * * * * * * * * * * * **
-*By: Rafael Araújo                                                 *
+/* * * * * * * * * * * * ArrayList in C * * * * * * * * * * * * * **
+*By: Rafael AraÃºjo                                                 *
 *                                                                  *
 *->Info:                                                           *
 *                                                                  *
 *The goal here is to practice some concepts learned in Data        *
 *Structure class, in this case, simulate the properties and        *
-* functionalities of a Linked List. in this program, I'll be       *
+* functionalities of an ArrayList. in this program, I'll be       *
 *adding some extra functions to allow the user to interact with    *
 *the list, the user be able to:                                    *
 *                                                                  *
@@ -17,7 +17,7 @@
 *                                                                  *
 *->Copyright Notice:                                               *
 *                                                                  *
-*Copyright 2019 Rafael Araújo                                      *
+*Copyright 2019 Rafael AraÃºjo                                      *
 *                                                                  *
 *Permission is hereby granted, free of charge, to any person       *
 *obtaining a copy of this software and associated documentation    *
@@ -57,9 +57,9 @@ typedef struct{
 typedef struct{
 	NODE elements[MAX_LENGTH];
 	ELEMENT length;
-}LINKEDLIST;
+}ARRAYLIST;
 
-LINKEDLIST* list;
+ARRAYLIST* list;
 
 char command; 
 
@@ -72,24 +72,24 @@ ELEMENT update;
 int functionCall = -1; //If the list is not initialized, this will be used to alert the user to initialize it.
 //-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 //Function signatures
-void setLinkedList(LINKEDLIST* list);
-int getLength(LINKEDLIST* list);
+void setLinkedList(ARRAYLIST* list);
+int getLength(ARRAYLIST* list);
 void listCommands();
-void setValue(LINKEDLIST* list, NODE value);
+void setValue(ARRAYLIST* list, NODE value);
 void menu();
-void getList(LINKEDLIST* list);
-void getOrderedList(LINKEDLIST* list);
-int findValue(LINKEDLIST* list, int value);
-int findValueByIndex(LINKEDLIST* list, int index);
-void updateValueByIndex(LINKEDLIST* list, int index, ELEMENT newValue);
-void removeFromList(LINKEDLIST* list, int index);
-void orderLookup(LINKEDLIST* list);
+void getList(ARRAYLIST* list);
+void getOrderedList(ARRAYLIST* list);
+int findValue(ARRAYLIST* list, int value);
+int findValueByIndex(ARRAYLIST* list, int index);
+void updateValueByIndex(ARRAYLIST* list, int index, ELEMENT newValue);
+void removeFromList(ARRAYLIST* list, int index);
+void orderLookup(ARRAYLIST* list);
 //-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 
 //Main
 int main(void){
-	list = (LINKEDLIST*)malloc(sizeof(LINKEDLIST));
-	printf("       ---LinkedList implementation in C---\n");
+	list = (ARRAYLIST*)malloc(sizeof(ARRAYLIST));
+	printf("       ---ArrayList implementation in C---\n");
 	printf("Tip: The '>>' appears when you can type a command.\n");
 	printf("Tip: The '>' appears when you need to type inputs to the functions.\n\n");
 	printf("Press 'h' for help.\n");
@@ -225,7 +225,7 @@ void listCommands(){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void setLinkedList(LINKEDLIST* list){
+void setLinkedList(ARRAYLIST* list){
 	system("CLS");
 	list->length=0;
 	printf("Linked List initialized.\n");
@@ -233,7 +233,7 @@ void setLinkedList(LINKEDLIST* list){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-int getLength(LINKEDLIST* list){
+int getLength(ARRAYLIST* list){
 	system("CLS");
 	if(functionCall!=-1){
 		return list->length;
@@ -244,7 +244,7 @@ int getLength(LINKEDLIST* list){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void setValue(LINKEDLIST* list, NODE value){
+void setValue(ARRAYLIST* list, NODE value){
 	functionCall = 1;
 	system("CLS");
 	if(list->length==0){
@@ -269,7 +269,7 @@ void setValue(LINKEDLIST* list, NODE value){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void getList(LINKEDLIST* list){
+void getList(ARRAYLIST* list){
 	int i;
 	
 	system("CLS");
@@ -291,7 +291,7 @@ void getList(LINKEDLIST* list){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void getOrderedList(LINKEDLIST* list){
+void getOrderedList(ARRAYLIST* list){
 	int i;
 	
 	system("CLS");
@@ -314,7 +314,7 @@ void getOrderedList(LINKEDLIST* list){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-int findValue(LINKEDLIST* list, int value){
+int findValue(ARRAYLIST* list, int value){
 	int i, index;
 	int found = 0;
 	
@@ -343,7 +343,7 @@ int findValue(LINKEDLIST* list, int value){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-int findValueByIndex(LINKEDLIST* list, int index){
+int findValueByIndex(ARRAYLIST* list, int index){
 	int i;
 	
 	system("CLS");
@@ -357,7 +357,7 @@ int findValueByIndex(LINKEDLIST* list, int index){
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void updateValueByIndex(LINKEDLIST* list, int index, ELEMENT newValue){
+void updateValueByIndex(ARRAYLIST* list, int index, ELEMENT newValue){
 	system("CLS");
 	char confirmation;
 	
@@ -386,7 +386,7 @@ void updateValueByIndex(LINKEDLIST* list, int index, ELEMENT newValue){
 	
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 	
-void removeFromList(LINKEDLIST* list, int index){
+void removeFromList(ARRAYLIST* list, int index){
 		int i;
 		char confirmation;
 		NODE aux;
@@ -423,7 +423,7 @@ void removeFromList(LINKEDLIST* list, int index){
 	
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
 
-void orderLookup(LINKEDLIST* list){
+void orderLookup(ARRAYLIST* list){
 	system("CLS");
 	
 	printf("Please, enter a list index (from %d to %d): \n>", 0, list->length-1);
