@@ -1,5 +1,5 @@
 # Linked List In C
-A simulation of the properties of a Linked List written in C
+A simulation of the properties of an ArrayList written in C 
 
 A bunch of features were added to allow the user to interact with the list such as:
 
