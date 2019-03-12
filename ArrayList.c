@@ -228,7 +228,7 @@ void listCommands(){
 void setArrayList(ARRAYLIST* list){
 	system("CLS");
 	list->length=0;
-	printf("Linked List initialized.\n");
+	printf("Array List initialized.\n");
 }
 
 //--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  
